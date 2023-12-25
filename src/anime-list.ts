@@ -12,7 +12,7 @@ export type CardProps = {
   name?: string
   image?: string
   type?: 'manga' | 'manhua' | 'manhwa' | 'novel'
-  chapter?: number | string
+  chapter?: number
   status?: string
   scans?: ScanProps[]
 }
@@ -27,7 +27,7 @@ export const listAnimes:CardProps[] = [
     scans: [
       { 
         name: 'Gekkou Scans',
-        url: 'https://gekkouscans.top/'
+        url: 'https://gekkouscans.top/manga/343599e3-2867-42cb-8439-7acede3ce775/'
       },
       { 
         name: 'Mangás Chan',
@@ -44,7 +44,7 @@ export const listAnimes:CardProps[] = [
     scans: [
       { 
         name: 'Saikai Scans',
-        url: 'https://saikaiscans.net/'
+        url: 'https://saikaiscans.net/comics/atirador-arcano'
       },
       { 
         name: 'Mangás Chan',
@@ -61,7 +61,7 @@ export const listAnimes:CardProps[] = [
     scans: [
       { 
         name: 'Argos Scans',
-        url: 'https://argosscan.com/'
+        url: 'https://argosscan.com/obras/1/martial-peak'
       },
       { 
         name: 'Mangás Chan',
@@ -78,7 +78,7 @@ export const listAnimes:CardProps[] = [
     scans: [
       { 
         name: 'Wuxia World',
-        url: 'https://www.wuxiaworld.com/'
+        url: 'https://www.wuxiaworld.com/novel/overgeared'
       }
     ]
   },
