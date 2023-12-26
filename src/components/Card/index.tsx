@@ -22,12 +22,12 @@ export const Card = ({name, status, type, chapter, image, scans}:CardProps) => {
   }
 
   return (
-    <div className="border-2 border-green-400 flex flex-wrap w-72 p-2 items-center">
+    <div className="border-2 border-green-400 flex flex-wrap w-80 p-2 items-center">
       <img src={image} alt={name} className="w-32 h-40"/>
       <div className="ml-4">
         <ul>
-          <li>
-            {name}
+          <li className="w-36">
+            <p className="text-lg font-bold truncate overflow-hidden"> {name || 'Undefined'} </p>
           </li>
           <li>
             <a href={scans?.[0].url} className="border-b-2 border-cyan-400 text-cyan-400" target="_blank" >{scans?.[0].name} </a>
