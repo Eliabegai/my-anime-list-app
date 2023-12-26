@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { listAnimes } from '../../anime-list'
-import { CardProps } from "../../anime-list";
+import { CardProps } from "../../types/listAnimes";
 
 
 export const Card = ({name, status, type, chapter, image, scans}:CardProps) => {

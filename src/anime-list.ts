@@ -9,20 +9,7 @@ import onePiece from "../src/img/one-piece.jpg"
 import onePunchMan from "../src/img/one-punch-man.jpg"
 import apotheosis from "../src/img/apotheosis.jpeg"
 
-type ScanProps = {
-  name?: string
-  url?: string
-}
-
-export type CardProps = {
-  id?: number | string
-  name?: string
-  image?: string
-  type?: 'manga' | 'manhua' | 'manhwa' | 'novel'
-  chapter?: number
-  status?: 'Lendo' | 'Vou Ler' | 'Concluído'
-  scans?: ScanProps[]
-}
+import { CardProps } from "./types/listAnimes"
 
 export const listAnimes:CardProps[] = [
   {
@@ -84,7 +71,7 @@ export const listAnimes:CardProps[] = [
     name: 'Overgeared',
     image: overgeared,
     type: 'novel',
-    chapter: 1954,
+    chapter: 1959,
     status: 'Lendo',
     scans: [
       { 
