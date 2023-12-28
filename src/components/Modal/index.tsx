@@ -38,7 +38,7 @@ export const Modal = ({ openModal, handleOpen, onClick, children }:ModalProps) =
         <DialogFooter placeholder={""}>
           <div className="flex flex-row w-full justify-between -mb-4">
             <Button onClick={handleOpen}> Cancel </Button>
-            <Button onClick={onClick} typeButton="bold">Confirm</Button>
+            <Button onClick={() => onClick } typeButton="bold">Confirm</Button>
           </div>
         </DialogFooter>
       </Dialog>

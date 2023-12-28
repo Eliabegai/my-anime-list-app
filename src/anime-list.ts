@@ -17,7 +17,7 @@ export const listAnimes:CardProps[] = [
     name: 'Eleceed',
     image: eleceed,
     type: 'manga',
-    chapter: 275,
+    chapter: 277,
     status: 'Lendo',
     scans: [
       { 
@@ -35,7 +35,7 @@ export const listAnimes:CardProps[] = [
     name: 'Atirador Arcano',
     image: arcaneSniper,
     type: 'manhwa',
-    chapter: 133,
+    chapter: 134,
     status: 'Lendo',
     scans: [
       { 
@@ -53,7 +53,7 @@ export const listAnimes:CardProps[] = [
     name: 'Martial Peak',
     image: martialPeak,
     type: 'manhua',
-    chapter: 3645,
+    chapter: 3647,
     status: 'Lendo',
     scans: [
       { 
@@ -113,7 +113,7 @@ export const listAnimes:CardProps[] = [
     name: 'Tales of Demons and Gods',
     image: talesOfDemonsAndGods,
     type: 'manhua',
-    chapter: 456,
+    chapter: 457.5,
     status: 'Lendo',
     scans: [
       { 
@@ -155,7 +155,7 @@ export const listAnimes:CardProps[] = [
     name: 'One Punch Man',
     image: onePunchMan,
     type: 'manga',
-    chapter: 233,
+    chapter: 234,
     status: 'Lendo',
     scans: [
       { 
