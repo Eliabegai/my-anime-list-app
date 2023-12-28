@@ -5,6 +5,7 @@ import { Card } from "./components/Card";
 import { Modal } from "./components/Modal";
 import { useEffect, useState } from "react";
 import { FormUser } from "./components/Formulario/FormUser";
+import { FormCadastroAnime } from "./components/Formulario/FormCadastroAnime";
 
 export type handleSubmitProps = {
   name: string
@@ -65,6 +66,10 @@ export default function App() {
     handleSubmit(data)
   }
 
+  const handleClickAnime = () => {
+    console.log('click')
+  }
+
   return (
     <div>
       <Header />
@@ -73,7 +78,7 @@ export default function App() {
           <button className="w-52 h-20 border-2 border-green-500 text-cyan-500 text-3xl" onClick={handleOpen}>Open Modal</button>
         </div>
 
-        {
+        {/* {
           open &&
             <Modal
             openModal={open}
@@ -88,7 +93,15 @@ export default function App() {
                 handleSubmit={handleSubmit}
               />
             </Modal>
-        }
+        } */}
+
+        <Modal
+          openModal={open}
+          handleOpen={handleOpen}
+          onClick={handleClickAnime}
+        >
+          <FormCadastroAnime />
+        </Modal>
 
         <div className="flex w-full flex-wrap h-[95vh] bg-gray-800 text-white justify-center items-center border-2 border-green-200 gap-1 overflow-auto p-2">
         {

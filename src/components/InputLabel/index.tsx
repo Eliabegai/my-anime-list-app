@@ -2,9 +2,9 @@
 type InputLabelProps = {
   children: React.ReactNode
   placeholder?: string
-  value: string
+  value?: string
   onChange?:(event: React.ChangeEvent<HTMLInputElement>) => void
-  typeInput: string
+  typeInput?: string
 }
 
 export const InputLabel = ({ children, placeholder, value, onChange, typeInput }:InputLabelProps) => {

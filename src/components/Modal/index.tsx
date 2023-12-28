@@ -25,9 +25,9 @@ export const Modal = ({ openModal, handleOpen, onClick, children }:ModalProps) =
       open={openModal} 
       handler={handleOpen} 
       placeholder={''} 
-      className="flex flex-col bg-gray-800 text-white m-auto p-2 w-[400px] border-2 border-green-400"
+      className="flex flex-col bg-gray-800 m-auto p-2 w-[400px] border-2 border-green-400"
       >
-        <DialogHeader placeholder={''}>Cadastro</DialogHeader>
+        <DialogHeader placeholder={''} className="text-white">Cadastro</DialogHeader>
 
         <DialogBody placeholder={''}>
           <div className="flex justify-center items-center">
