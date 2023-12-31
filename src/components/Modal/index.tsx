@@ -6,18 +6,16 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import { Button } from "../Button";
-import { FormUser } from "../Formulario/FormUser";
-import { handleSubmitProps } from "../../App";
 
 
 type ModalProps = {
   openModal: boolean
   handleOpen: () => void
-  onClick?: () => void
+  onConfirm?: (event: React.MouseEvent<MouseEvent>) => void
   children: React.ReactNode
 }
  
-export const Modal = ({ openModal, handleOpen, onClick, children }:ModalProps) => {
+export const Modal = ({ openModal, handleOpen, onConfirm, children }:ModalProps) => {
 
   return (
     <>
@@ -27,18 +25,18 @@ export const Modal = ({ openModal, handleOpen, onClick, children }:ModalProps) =
       placeholder={''} 
       className="flex flex-col bg-gray-800 m-auto p-2 w-[400px] border-2 border-green-400"
       >
-        <DialogHeader placeholder={''} className="text-white">Cadastro</DialogHeader>
+        <DialogHeader placeholder={'header-modal'} className="text-white">Cadastro</DialogHeader>
 
-        <DialogBody placeholder={''}>
+        <DialogBody placeholder={'body-modal'}>
           <div className="flex justify-center items-center">
             {children}
           </div>
         </DialogBody>
 
-        <DialogFooter placeholder={""}>
+        <DialogFooter placeholder={"footer-modal"}>
           <div className="flex flex-row w-full justify-between -mb-4">
             <Button onClick={handleOpen}> Cancel </Button>
-            <Button onClick={() => onClick } typeButton="bold">Confirm</Button>
+            <Button onClick={onConfirm as () => void} typeButton="bold">Confirm</Button>
           </div>
         </DialogFooter>
       </Dialog>
