@@ -11,4 +11,13 @@ export type CardProps = {
   chapter?: number
   status?: 'Lendo' | 'Vou Ler' | 'Concluído' | string
   scans?: ScanProps[]
+  newScans?: {
+    name: string
+    url: string
+  }
 }
+
+export type Photo = {
+  name: string
+  url: string
+} 

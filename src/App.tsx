@@ -1,4 +1,5 @@
 import { Header } from "./components/Header";
+import { insert, getAll } from "./service/photos";
 
 import { listAnimes } from './anime-list'
 import { Card } from "./components/Card";
@@ -17,8 +18,10 @@ type GetItensProps = {
   id: number
   imageUrl: string
   name : string
-  scanName : string
-  scanUrl : string
+  scan: {
+    name: string
+    url: string
+  }
   status : string
   type: string
 }
@@ -84,7 +87,7 @@ export default function App() {
 
   const handleClickAnime = async () => {
 
-    const url = await postImage()
+    const url = await newPostImage()
 
     const data = {
       "name": nameAnime,
@@ -169,7 +172,7 @@ export default function App() {
   ]
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, type:string) => {
-    
+    event.preventDefault()
     if(type === 'nameAnime') {
     }
     
@@ -192,7 +195,9 @@ export default function App() {
   }
 
 
-  const handleChooseSelect = (event:React.ChangeEvent<HTMLSelectElement>, type:string) => {
+  const handleChooseSelect = (event:React.ChangeEvent<HTMLSelectElement>, type:string) => 
+  {
+    event.preventDefault()
     switch(type) {
       case 'type':
         setTypeAnime(event.target.value)
@@ -206,6 +211,7 @@ export default function App() {
   }
 
   const handleSaveFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
     const arquivo = e.target.files?.[0]
     setFile(arquivo)
   }
@@ -220,24 +226,22 @@ export default function App() {
 
   const handleOpenImage = () => setOpenImage(!openImage)
 
-  const [items, setItems] = useState<GetItensProps[]>()
+  const [items, setItems] = useState<GetItensProps[]>([])
 
-  const postImage = async () => {
-    let urlImage = ''
-    if(file === undefined) return
+  const newPostImage = async () => {
+    
+    if(file && file.size > 0) {
+      
+      let result = await insert(file)
 
-    const data = new FormData()
-      data.append('arquivo', file)
-
-    await fetch("http://localhost:3000/files", {
-      method: "POST",
-      body: data,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        urlImage = data.url
-      });
-      return urlImage
+      if(result instanceof Error) {
+        alert(`${result.name} - ${result.message}`)
+      } else {
+        let newUrl = result.url
+        console.log(newUrl)
+        return newUrl
+      }
+    }
   }
 
   useEffect(() => {
@@ -263,7 +267,7 @@ export default function App() {
           <Modal
             openModal={openImage}
             handleOpen={handleOpenImage}
-            onConfirm={postImage}
+            onConfirm={newPostImage}
           >
             <input type="file" placeholder="teste" onChange={handleSaveFile} name="arquivo" />
           </Modal>
@@ -322,7 +326,7 @@ export default function App() {
         }
 
         </div>
-        {/* <div>
+        <div>
       {
             items &&
             items.map(i => (
@@ -333,11 +337,11 @@ export default function App() {
                 status={i.status}
                 image={i.imageUrl}
                 type={i.type}
-                scans={i.scan}
+                newScans={i.scan}
               />
             ))
         }
-        </div> */}
+        </div>
 
       </div>
     </div>
