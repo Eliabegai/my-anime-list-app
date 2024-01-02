@@ -110,7 +110,6 @@ export default function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         clearForm()
       });
   }
@@ -238,7 +237,6 @@ export default function App() {
         alert(`${result.name} - ${result.message}`)
       } else {
         let newUrl = result.url
-        console.log(newUrl)
         return newUrl
       }
     }
@@ -246,9 +244,7 @@ export default function App() {
 
   useEffect(() => {
     getData()
-  },[])
-
-  console.log(items)
+  },[open])
 
   return (
     <div>
@@ -258,11 +254,11 @@ export default function App() {
         <div className="flex bg-gray-600 justify-center items-center p-4">
           <button className="w-52 h-20 border-2 border-green-500 text-cyan-500 text-3xl" onClick={handleOpen}>Open Modal</button>
         </div>
-        <div className="flex bg-gray-600 justify-center items-center p-4">
+        {/* <div className="flex bg-gray-600 justify-center items-center p-4">
           <button className="w-52 h-20 border-2 border-green-500 text-cyan-500 text-3xl" onClick={handleOpenImage}>GET DATA</button>
-        </div>
+        </div> */}
 
-        {
+        {/* {
           openImage &&
           <Modal
             openModal={openImage}
@@ -271,7 +267,7 @@ export default function App() {
           >
             <input type="file" placeholder="teste" onChange={handleSaveFile} name="arquivo" />
           </Modal>
-        }
+        } */}
 
         {/* {
           open &&
@@ -310,7 +306,7 @@ export default function App() {
           </div>
         </Modal>
 
-        <div className="flex w-full flex-wrap h-[95vh] bg-gray-800 text-white justify-center items-center border-2 border-green-200 gap-1 overflow-auto p-2">
+        {/* <div className="flex w-full flex-wrap h-[95vh] bg-gray-800 text-white justify-center items-center border-2 border-green-200 gap-1 overflow-auto p-2">
         {
           listAnimes.map((i, index) => (
             <Card
@@ -325,8 +321,8 @@ export default function App() {
           ))
         }
 
-        </div>
-        <div>
+        </div> */}
+        <div className="flex w-full flex-wrap h-[95vh] bg-gray-800 text-white justify-center items-center border-2 border-green-200 gap-1 overflow-auto p-2">
       {
             items &&
             items.map(i => (
