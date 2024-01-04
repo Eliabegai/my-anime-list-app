@@ -9,7 +9,7 @@ import onePiece from "../src/img/one-piece.jpg"
 import onePunchMan from "../src/img/one-punch-man.jpg"
 import apotheosis from "../src/img/apotheosis.jpeg"
 
-import { CardProps } from "./types/listAnimes"
+import { CardProps } from "./types/listAnimesProps"
 
 export const listAnimes:CardProps[] = [
   {

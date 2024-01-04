@@ -1,17 +1,13 @@
-import { useState } from "react"
 import { InputLabel } from "../InputLabel"
-import { setId } from "@material-tailwind/react/components/Tabs/TabsContext"
-import { handleSubmitProps } from "../../App"
 
 type FormUserPros = {
   name: string
   idade: string
   handleName: (event: React.ChangeEvent<HTMLInputElement>) => void
   handleIdade: (event: React.ChangeEvent<HTMLInputElement>) => void
-  handleSubmit?: ({ name, idade }:handleSubmitProps) => void
 }
 
-export const FormUser = ({ name, idade, handleName, handleIdade, handleSubmit }:FormUserPros) => {
+export const FormUser = ({ name, idade, handleName, handleIdade }:FormUserPros) => {
 
 
   return(

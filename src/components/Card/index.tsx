@@ -1,24 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import { listAnimes } from '../../anime-list'
-import { CardProps } from "../../types/listAnimes";
+import { CardProps, GetItensProps } from "../../types/listAnimesProps";
 
+export const Card = ({name, status, type, chapter, image, scans, newScans, id, handleButtonChangeAdd, handleButtonChangeRemove, handleChangeChapter }:CardProps) => {
 
-export const Card = ({name, status, type, chapter, image, scans, newScans}:CardProps) => {
+  const [ value, setValue ] = useState(chapter || 0)
 
-  const [value, setValue] = useState(chapter || 0)
-  
-  function handleAddValue(event:React.MouseEvent<HTMLButtonElement, MouseEvent>){
-    setValue(value + 1)
-  }
-
-  function handleRemovetValue(event:React.MouseEvent<HTMLButtonElement, MouseEvent>){
-    setValue(value - 1)
-  }
-
-  function handleModifyChapter(event: React.ChangeEvent<HTMLInputElement>){
-    const newValue = parseFloat(event.target.value)
-    setValue(newValue)
+  const handleModifyChapter = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(parseFloat(event.target.value))
+    handleChangeChapter(value)
   }
 
   return (
@@ -32,7 +22,6 @@ export const Card = ({name, status, type, chapter, image, scans, newScans}:CardP
           <li>
             {newScans ? 
             <a href={newScans.url} className="border-b-2 border-cyan-400 text-cyan-400" target="_blank" >{newScans.name} </a>
-
             :
             <a href={scans?.[0].url} className="border-b-2 border-cyan-400 text-cyan-400" target="_blank" >{scans?.[0].name} </a>
             
@@ -57,8 +46,8 @@ export const Card = ({name, status, type, chapter, image, scans, newScans}:CardP
           </li>
         </ul>
         <div className="flex justify-around">
-          <button onClick={handleRemovetValue} className="flex items-center justify-center text-2xl w-10 h-8 border-2 border-green-800 rounded-md">-</button>
-          <button onClick={handleAddValue} className="flex items-center justify-center text-2xl w-10 h-8 border-2 border-green-800 rounded-md">+</button>
+          <button onClick={handleButtonChangeRemove} className="flex items-center justify-center text-2xl w-10 h-8 border-2 border-green-800 rounded-md">-</button>
+          <button onClick={handleButtonChangeAdd} className="flex items-center justify-center text-2xl w-10 h-8 border-2 border-green-800 rounded-md">+</button>
         </div>
       </div>
     </div>

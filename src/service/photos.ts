@@ -1,4 +1,4 @@
-import { Photo } from "../types/listAnimes"
+import { Photo } from "../types/listAnimesProps"
 import { storage } from "../libs/firebase"
 import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage"
 import {v4 as createID} from 'uuid'

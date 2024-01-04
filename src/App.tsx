@@ -1,30 +1,11 @@
 import { Header } from "./components/Header";
-import { insert, getAll } from "./service/photos";
-
-import { listAnimes } from './anime-list'
+import { insert } from "./service/photos";
 import { Card } from "./components/Card";
 import { Modal } from "./components/Modal";
 import { useEffect, useState } from "react";
-import { FormUser } from "./components/Formulario/FormUser";
 import { FormCadastroAnime } from "./components/Formulario/FormCadastroAnime";
+import { GetItensProps } from "./types/listAnimesProps";
 
-export type handleSubmitProps = {
-  name: string
-  idade: string
-}
-
-type GetItensProps = {
-  chapter: number
-  id: number
-  imageUrl: string
-  name : string
-  scan: {
-    name: string
-    url: string
-  }
-  status : string
-  type: string
-}
 
 export default function App() {
 
@@ -36,13 +17,11 @@ export default function App() {
   const [scanAnime, setScanAnime] = useState('')
   const [scanUrlAnime, setScanUrlAnime] = useState('')
   const [file, setFile] = useState<File>()
-  const [openImage, setOpenImage] = useState(false)
   const [items, setItems] = useState<GetItensProps[]>([])
   const [loading, setLoading] = useState(false)
 
   
   const handleOpen = () => setOpen(!open);
-  const handleOpenImage = () => setOpenImage(!openImage)
 
   useEffect(() => {
     getData()
@@ -56,6 +35,7 @@ export default function App() {
     setStatusAnime('')
     setScanAnime('')
     setScanUrlAnime('')
+    setLoading(!loading)
   }
 
   const optionsStatus = [
@@ -131,7 +111,6 @@ export default function App() {
   }
 
   const handleSaveFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
     const arquivo = e.target.files?.[0]
     setFile(arquivo)
   }
@@ -157,7 +136,9 @@ export default function App() {
     }
   }
 
-  const handleClickAnime = async () => {
+  const handleCadastroManga = async () => {
+
+    setLoading(true)
 
     const url = await postImage()
 
@@ -186,9 +167,59 @@ export default function App() {
       });
   }
 
-  const handleTeste = () => {
-    handleClickAnime()
+  const handleSubmitUpdate = async (data:GetItensProps, id:number) => {
+
+    await fetch(`http://localhost:3000/animes/${id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        setLoading(false)
+      });
+  }
+
+  const handleSubmitCadastro = () => {
+    handleCadastroManga()
   };
+
+  const handleChangeChapter = async (id: number, type: string, value?: number) => {
+
+    console.log(value)
+
+    setLoading(true)
+    let newValue
+    
+    const response = await fetch(`http://localhost:3000/animes/${id}`);
+    const data:GetItensProps = await response.json();
+    if(type === 'add') {
+      newValue = data?.chapter + 1
+    } 
+    if(type === 'remove') {
+      newValue = data?.chapter - 1
+    }
+    if (type === 'change') {
+      newValue = value
+    }
+    
+    const newData = {
+      "id": id,
+      "name": data?.name,
+      "type": data.type,
+      "chapter": newValue,
+      "status": data?.status,
+      "scan": {
+        "name": data?.scan.name,
+        "url": data?.scan.url
+      },
+      "imageUrl": data?.imageUrl
+    } as GetItensProps
+
+    handleSubmitUpdate(newData, id)
+  }
 
   return (
     <div>
@@ -201,7 +232,7 @@ export default function App() {
 
         <Modal
           handleOpen={handleOpen}
-          onConfirm={handleTeste}
+          onConfirm={handleSubmitCadastro}
           openModal={open}
         >
           <div>
@@ -219,18 +250,36 @@ export default function App() {
           </div>
         </Modal>
 
+        {
+          loading &&
+            <div>
+              <Modal
+              openModal={true}
+              handleOpen={handleOpen}
+              type={'info'}
+              >
+                Carregando...
+              </Modal>
+            </div>
+
+        }
+
         <div className="flex w-full flex-wrap h-[95vh] bg-gray-800 text-white justify-center items-center border-2 border-green-200 gap-1 overflow-auto p-2">
           {
             items &&
             items.map(i => (
               <Card
                 key={i.id}
+                id={i.id}
                 name={i.name}
                 chapter={i.chapter}
                 status={i.status}
                 image={i.imageUrl}
                 type={i.type}
                 newScans={i.scan}
+                handleButtonChangeAdd={() => handleChangeChapter(i.id, 'add')}
+                handleButtonChangeRemove={() => handleChangeChapter(i.id, 'remove')}
+                handleChangeChapter={() => handleChangeChapter(i.id, 'change')}
               />
             ))
           }
