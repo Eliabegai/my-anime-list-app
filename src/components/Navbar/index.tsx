@@ -1,13 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import ImageDragon from '../../img/dragon.png'
-import { Button } from "../Button"
 
-type NavbarProps = {
-  handleOpen?: () => void
-}
-
-export const Navbar = ({ handleOpen }:NavbarProps) => {
+export const Navbar = () => {
   return(
     <nav className="bg-gray-900 flex flex-row items-center justify-center">
       <div className="w-full flex items-center justify-between mx-auto p-4">

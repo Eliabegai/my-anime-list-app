@@ -8,7 +8,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { Home } from './pages/home';
 import { Contact } from './pages/contact';
 
 const router = createBrowserRouter([

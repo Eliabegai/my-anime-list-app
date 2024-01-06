@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { CardProps, GetItensProps } from "../../types/listAnimesProps";
+import { CardProps } from "../../types/listAnimesProps";
 import { Button } from "../Button";
 
 export const Card = ({name, status, type, chapter, image, scans, newScans, id, handleButtonChangeAdd, handleButtonChangeRemove, handleChangeChapter }:CardProps) => {
@@ -27,12 +27,7 @@ export const Card = ({name, status, type, chapter, image, scans, newScans, id, h
             <p className="text-lg font-bold truncate overflow-hidden"> {name || 'Undefined'} </p>
           </li>
           <li>
-            {newScans ? 
-            <a href={newScans.url} className="border-b-2 border-cyan-400 text-cyan-400" target="_blank" >{newScans.name} </a>
-            :
-            <a href={scans?.[0].url} className="border-b-2 border-cyan-400 text-cyan-400" target="_blank" >{scans?.[0].name} </a>
-            
-          }
+            <a href={newScans?.url} className="border-b-2 border-cyan-400 text-cyan-400" target="_blank" rel='noopener' >{newScans?.name} </a>
           </li>
           <li>
             Status: {status}

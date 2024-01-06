@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Header } from "./components/Header";
 import { Home } from "./pages/home";
 import { Navbar } from "./components/Navbar";
 
@@ -13,9 +12,7 @@ export default function App() {
 
   return (
     <div>
-      <Navbar
-        handleOpen={handleOpen}
-      />
+      <Navbar/>
 
       <body>
         <Home 
