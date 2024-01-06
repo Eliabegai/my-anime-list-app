@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { FormCadastroAnime } from "./components/Formulario/FormCadastroAnime";
 import { GetItensProps } from "./types/listAnimesProps";
 
-
 export default function App() {
 
   const [open, setOpen] = useState(false);
@@ -18,14 +17,12 @@ export default function App() {
   const [scanUrlAnime, setScanUrlAnime] = useState('')
   const [file, setFile] = useState<File>()
   const [items, setItems] = useState<GetItensProps[]>([])
-  const [loading, setLoading] = useState(false)
-
   
   const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
     getData()
-  },[loading])
+  },[items])
 
   const clearForm = () => {
     handleOpen()
@@ -35,7 +32,6 @@ export default function App() {
     setStatusAnime('')
     setScanAnime('')
     setScanUrlAnime('')
-    setLoading(!loading)
   }
 
   const optionsStatus = [
@@ -138,8 +134,6 @@ export default function App() {
 
   const handleCadastroManga = async () => {
 
-    setLoading(true)
-
     const url = await postImage()
 
     const data = {
@@ -178,7 +172,7 @@ export default function App() {
     })
       .then((response) => response.json())
       .then(() => {
-        setLoading(false)
+        getData()
       });
   }
 
@@ -186,11 +180,8 @@ export default function App() {
     handleCadastroManga()
   };
 
-  const handleChangeChapter = async (id: number, type: string, value?: number) => {
+  const handleChangeChapter = async (id?: number, type?: string, value?: number) => {
 
-    console.log(value)
-
-    setLoading(true)
     let newValue
     
     const response = await fetch(`http://localhost:3000/animes/${id}`);
@@ -218,7 +209,12 @@ export default function App() {
       "imageUrl": data?.imageUrl
     } as GetItensProps
 
-    handleSubmitUpdate(newData, id)
+    handleSubmitUpdate(newData, id as number)
+  }
+
+  const handleModifyChapter = (value:number, id: number) => {
+    console.log(value, id)
+    handleChangeChapter(id, 'change', value)
   }
 
   return (
@@ -250,20 +246,6 @@ export default function App() {
           </div>
         </Modal>
 
-        {
-          loading &&
-            <div>
-              <Modal
-              openModal={true}
-              handleOpen={handleOpen}
-              type={'info'}
-              >
-                Carregando...
-              </Modal>
-            </div>
-
-        }
-
         <div className="flex w-full flex-wrap h-[95vh] bg-gray-800 text-white justify-center items-center border-2 border-green-200 gap-1 overflow-auto p-2">
           {
             items &&
@@ -279,7 +261,7 @@ export default function App() {
                 newScans={i.scan}
                 handleButtonChangeAdd={() => handleChangeChapter(i.id, 'add')}
                 handleButtonChangeRemove={() => handleChangeChapter(i.id, 'remove')}
-                handleChangeChapter={() => handleChangeChapter(i.id, 'change')}
+                handleChangeChapter={handleModifyChapter}
               />
             ))
           }

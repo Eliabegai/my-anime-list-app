@@ -40,7 +40,6 @@ export const insert = async (file: File) => {
 }
 
 export const deletePhoto = async (id: string) => {
-  console.log(id)
   if(id){
     const deleteImage = ref(storage, `images/${id}`)
   

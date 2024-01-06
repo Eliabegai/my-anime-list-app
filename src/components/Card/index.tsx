@@ -3,12 +3,18 @@ import React, { useEffect, useState } from "react";
 import { CardProps, GetItensProps } from "../../types/listAnimesProps";
 
 export const Card = ({name, status, type, chapter, image, scans, newScans, id, handleButtonChangeAdd, handleButtonChangeRemove, handleChangeChapter }:CardProps) => {
-
   const [ value, setValue ] = useState(chapter || 0)
 
-  const handleModifyChapter = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log(event.key)
+    if(event.key === 'Enter') {
+      if(typeof handleChangeChapter === 'function')
+      handleChangeChapter(value, id as number)
+    }
+  }
+
+  const handleModifyChapter = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(parseFloat(event.target.value))
-    handleChangeChapter(value)
   }
 
   return (
@@ -41,7 +47,9 @@ export const Card = ({name, status, type, chapter, image, scans, newScans, id, h
               type="number" 
               value={value} 
               onChange={handleModifyChapter}
-              placeholder="chapter" />
+              onKeyDown={onKeyDown}
+              placeholder="chapter" 
+              />
             </span>
           </li>
         </ul>
