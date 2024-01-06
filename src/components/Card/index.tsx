@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { CardProps, GetItensProps } from "../../types/listAnimesProps";
+import { Button } from "../Button";
 
 export const Card = ({name, status, type, chapter, image, scans, newScans, id, handleButtonChangeAdd, handleButtonChangeRemove, handleChangeChapter }:CardProps) => {
   const [ value, setValue ] = useState(chapter || 0)
@@ -54,8 +55,8 @@ export const Card = ({name, status, type, chapter, image, scans, newScans, id, h
           </li>
         </ul>
         <div className="flex justify-around">
-          <button onClick={handleButtonChangeRemove} className="flex items-center justify-center text-2xl w-10 h-8 border-2 border-green-800 rounded-md">-</button>
-          <button onClick={handleButtonChangeAdd} className="flex items-center justify-center text-2xl w-10 h-8 border-2 border-green-800 rounded-md">+</button>
+          <Button onClick={handleButtonChangeRemove as () => void} size="small">-</Button>
+          <Button onClick={handleButtonChangeAdd as () => void} size="small">+</Button>
         </div>
       </div>
     </div>
