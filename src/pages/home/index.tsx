@@ -22,11 +22,11 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const [scanAnime, setScanAnime] = useState('')
   const [scanUrlAnime, setScanUrlAnime] = useState('')
   const [file, setFile] = useState<File>()
-  const [items, setItems] = useState<GetItensProps[]>([])
+  const [items, setItems] = useState<{data: GetItensProps[], count: number}>()
   
   useEffect(() => {
     getData()
-  },[items])
+  },[])
 
   const clearForm = () => {
     handleOpen()
@@ -117,8 +117,8 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
   const getData = async () => {
     const response = await fetch("http://localhost:3000/animes");
-      const data = await response.json();
-      setItems(data);
+    const data = await response.json();
+    setItems(data);
   }
 
   const postImage = async () => {
@@ -217,7 +217,6 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   }
 
   const handleModifyChapter = (value:number, id: number) => {
-    console.log(value, id)
     handleChangeChapter(id, 'change', value)
   }
 
@@ -245,7 +244,12 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
         </Modal>
 
         <div className="flex flex-col w-auto h-[99vh] bg-gray-800 text-white border-2 border-green-200">
-          <div className="flex flex-row justify-end mr-4 mt-4">
+          <div className="flex flex-row justify-between mx-4 mt-4">
+            <div className="flex justify-center items-center px-2 w-10 h-10 bg-gray-900 rounded-full animate-pulse">
+              <span className="text-green-500 font-extralight">
+                {items?.count}
+              </span>
+            </div>
             <Button
                 onClick={handleOpen}
                 size="default"
@@ -253,10 +257,10 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
                 <span className="">Cadastrar</span>
             </Button>
           </div>
-          <div className="flex flex-wrap justify-center gap-2 p-4 overflow-auto">
+          <div className="flex flex-wrap justify-center gap-4 p-4 overflow-auto">
             {
               items &&
-              items.map(i => (
+              items?.data.map(i => (
                 <Card
                   key={i.id}
                   id={i.id}
