@@ -17,7 +17,7 @@ type FormCadastroProps = {
 export const FormCadastroAnime = ({ nameAnime, optionsType, optionsStatus, chapterAnime, scanAnime, scanUrlAnime, handleChange, handleChooseSelect, handleSaveFile }:FormCadastroProps) => {
 
   return(
-    <div>
+    <div className="flex flex-col gap-y-6">
       <InputLabel onChange={e => handleChange(e, 'nameAnime')} value={nameAnime} >Nome Anime</InputLabel>
       <InputSelect options={optionsType} onChange={e => handleChooseSelect(e, 'type')} title={'Type'} />
       <InputLabel onChange={e => handleChange(e, 'chapterAnime')} typeInput="number" value={chapterAnime} >Chapter</InputLabel>
