@@ -25,6 +25,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const [file, setFile] = useState<File>()
   const [items, setItems] = useState<{data: GetItensProps[], count: number}>()
   const [search, setSearch] = useState('')
+  const urlAPI = process.env.URL_API
   useEffect(() => {
     getData()
   },[])
@@ -120,7 +121,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     let newFilter = ''
     if(filter) newFilter = filter
 
-    const response = await fetch(`http://localhost:3000/animes/${newFilter}`);
+    const response = await fetch(`${urlAPI}${newFilter}`);
     const data = await response.json();
     setItems(data);  
     
@@ -157,7 +158,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
       "imageUrl": url
     }
 
-    await fetch("http://localhost:3000/animes", {
+    await fetch(`${urlAPI}`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -172,7 +173,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
   const handleSubmitUpdate = async (data:GetItensProps, id:number) => {
 
-    await fetch(`http://localhost:3000/animes/${id}`, {
+    await fetch(`${urlAPI}${id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',
@@ -193,7 +194,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
     let newValue
     
-    const response = await fetch(`http://localhost:3000/animes/${id}`);
+    const response = await fetch(`${urlAPI}${id}`);
     const data:GetItensProps = await response.json();
     if(type === 'add') {
       newValue = data?.chapter + 1
