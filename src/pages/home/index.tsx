@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { FormCadastroAnime } from "../../components/Formulario/FormCadastroAnime";
 import { GetItensProps } from "../../types/listAnimesProps";
 import { Button } from "../../components/Button";
+import { InputLabel } from "../../components/InputLabel";
 
 type HomeProps = {
   handleOpen: () => void
@@ -23,7 +24,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const [scanUrlAnime, setScanUrlAnime] = useState('')
   const [file, setFile] = useState<File>()
   const [items, setItems] = useState<{data: GetItensProps[], count: number}>()
-  
+  const [search, setSearch] = useState('')
   useEffect(() => {
     getData()
   },[])
@@ -115,10 +116,14 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     setFile(arquivo)
   }
 
-  const getData = async () => {
-    const response = await fetch("http://localhost:3000/animes");
+  const getData = async (filter?:string) => {
+    let newFilter = ''
+    if(filter) newFilter = filter
+
+    const response = await fetch(`http://localhost:3000/animes/${newFilter}`);
     const data = await response.json();
-    setItems(data);
+    setItems(data);  
+    
   }
 
   const postImage = async () => {
@@ -220,6 +225,18 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     handleChangeChapter(id, 'change', value)
   }
 
+  const handleSearch = (e:React.KeyboardEvent<HTMLInputElement>) => {
+
+    console.log(e.key)
+
+    if(e.key === 'Enter' && search !== '') {
+      getData(`name/${search}`)
+    } else {
+      getData()
+    }
+
+  }
+
 
   return(
     <div>
@@ -250,6 +267,41 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
                 {items?.count}
               </span>
             </div>
+            <div className="flex flex-row gap-x-4">
+            <Button
+                onClick={() => getData()}
+                size="default"
+              >
+                <span className="">All</span>
+            </Button>
+            <Button
+                onClick={() => getData('status/lendo')}
+                size="default"
+              >
+                <span className="">Lendo</span>
+            </Button>
+            <Button
+                onClick={() => getData('status/vouLer')}
+                size="default"
+              >
+                <span className="">Vou Ler</span>
+            </Button>
+            <Button
+                onClick={() => getData('status/concluido')}
+                size="default"
+              >
+                <span className="">Concluído</span>
+            </Button>
+            </div>
+            <div className="flex p-1 w-96 justify-center">
+              <InputLabel
+                onChange={e => setSearch(e.target.value)}
+                value={search}
+                onKeyDown={handleSearch}
+                typeInput="text"
+                model='search'
+              >Search</InputLabel>
+            </div>
             <Button
                 onClick={handleOpen}
                 size="default"
@@ -260,7 +312,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
           <div className="flex flex-wrap justify-center gap-4 p-4 overflow-auto">
             {
               items &&
-              items?.data.map(i => (
+              items?.data?.map(i => (
                 <Card
                   key={i.id}
                   id={i.id}
