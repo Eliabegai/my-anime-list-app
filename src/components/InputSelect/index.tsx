@@ -23,8 +23,8 @@ export const InputSelect = ({ options, title, onChange }:InputSelectProps) => {
       >
         <option selected className="opacity-50">{title || 'Choose a option'}</option>
         {
-          options?.map(option => (
-            <option value={option.value} className="text-white">{option.label}</option>
+          options?.map((option, index) => (
+            <option key={index} value={option.value} className="text-white">{option.label}</option>
           ))
         }
       </select>

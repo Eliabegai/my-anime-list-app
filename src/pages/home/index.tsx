@@ -16,6 +16,7 @@ type HomeProps = {
 
 export const Home = ({ handleOpen, open }:HomeProps) => {
 
+
   const [nameAnime, setNameAnime] = useState('')
   const [typeAnime, setTypeAnime] = useState('')
   const [chapterAnime, setChapterAnime] = useState(0)
@@ -25,10 +26,11 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const [file, setFile] = useState<File>()
   const [items, setItems] = useState<{data: GetItensProps[], count: number}>()
   const [search, setSearch] = useState('')
-  const urlAPI = process.env.URL_API
+  const urlAPI = process.env.REACT_APP_URL_API
   useEffect(() => {
     getData()
   },[])
+
 
   const clearForm = () => {
     handleOpen()
@@ -121,10 +123,12 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     let newFilter = ''
     if(filter) newFilter = filter
 
-    const response = await fetch(`${urlAPI}${newFilter}`);
-    const data = await response.json();
-    setItems(data);  
-    
+    await fetch(`${urlAPI}${newFilter}`).then(response =>{
+      return response.json();
+        }).then(data =>
+           setItems(data)
+        ).catch(e => console.log(e))
+
   }
 
   const postImage = async () => {
@@ -228,10 +232,8 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
   const handleSearch = (e:React.KeyboardEvent<HTMLInputElement>) => {
 
-    console.log(e.key)
-
     if(e.key === 'Enter' && search !== '') {
-      getData(`name/${search}`)
+      getData(`/name/${search}`)
     } else {
       getData()
     }
@@ -276,19 +278,19 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
                 <span className="">All</span>
             </Button>
             <Button
-                onClick={() => getData('status/lendo')}
+                onClick={() => getData('/status/lendo')}
                 size="default"
               >
                 <span className="">Lendo</span>
             </Button>
             <Button
-                onClick={() => getData('status/vouLer')}
+                onClick={() => getData('/status/vouLer')}
                 size="default"
               >
                 <span className="">Vou Ler</span>
             </Button>
             <Button
-                onClick={() => getData('status/concluido')}
+                onClick={() => getData('/status/concluido')}
                 size="default"
               >
                 <span className="">Concluído</span>
