@@ -233,7 +233,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const handleSearch = (e:React.KeyboardEvent<HTMLInputElement>) => {
 
     if(e.key === 'Enter' && search !== '') {
-      getData(`/name/${search}`)
+      getData(`name/${search}`)
     } else {
       getData()
     }
@@ -278,19 +278,19 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
                 <span className="">All</span>
             </Button>
             <Button
-                onClick={() => getData('/status/lendo')}
+                onClick={() => getData('status/lendo')}
                 size="default"
               >
                 <span className="">Lendo</span>
             </Button>
             <Button
-                onClick={() => getData('/status/vouLer')}
+                onClick={() => getData('status/vouLer')}
                 size="default"
               >
                 <span className="">Vou Ler</span>
             </Button>
             <Button
-                onClick={() => getData('/status/concluido')}
+                onClick={() => getData('status/concluido')}
                 size="default"
               >
                 <span className="">Concluído</span>
