@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { CardProps } from "../../types/listAnimesProps";
 import { Button } from "../Button";
+import { Tooltip } from "../Tolltip";
 
 export const Card = ({name, status, type, chapter, image, scans, newScans, id, handleButtonChangeAdd, handleButtonChangeRemove, handleChangeChapter }:CardProps) => {
   const [ value, setValue ] = useState(chapter || 0)
@@ -24,15 +25,9 @@ export const Card = ({name, status, type, chapter, image, scans, newScans, id, h
       <div className="ml-4">
         <ul>
           <li className="w-36">
-            <p className="text-lg font-bold truncate overflow-hidden"> {name || 'Undefined'} </p>
-
-                <button data-tooltip-target="tooltip-default" type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Default tooltip</button>
-
-                <div id="tooltip-default" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Tooltip content
-                    <div className="tooltip-arrow" data-popper-arrow></div>
-                </div>
-
+            <Tooltip label={name || 'Undefined'}>
+              <p className="text-lg font-bold truncate overflow-hidden"> {name || 'Undefined'} </p>
+            </Tooltip>
           </li>
           <li>
             <a href={newScans?.url} className="border-b-2 border-cyan-400 text-cyan-400" target="_blank" rel='noopener' >{newScans?.name} </a>

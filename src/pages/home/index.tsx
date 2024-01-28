@@ -8,6 +8,7 @@ import { FormCadastroAnime } from "../../components/Formulario/FormCadastroAnime
 import { GetItensProps } from "../../types/listAnimesProps";
 import { Button } from "../../components/Button";
 import { InputLabel } from "../../components/InputLabel";
+import { FiltersAnimeList } from "../../components/Filters";
 
 type HomeProps = {
   handleOpen: () => void
@@ -233,16 +234,21 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const handleSearch = (e:React.KeyboardEvent<HTMLInputElement>) => {
 
     if(e.key === 'Enter' && search !== '') {
-      getData(`/name/${search}`)
+      getData(`name/${search}`)
     } else {
       getData()
     }
 
   }
 
+  const handlesetSearch = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+  }
+
 
   return(
-    <div>
+    <div className="flex w-auto h-screen">
+      <div>
         <Modal
           handleOpen={handleOpen}
           onConfirm={handleSubmitCadastro}
@@ -262,77 +268,42 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
             />
           </div>
         </Modal>
+      </div>
 
-        <div className="flex flex-col w-auto h-[99vh] bg-gray-800 text-white border-2 border-green-200">
-          <div className="flex flex-row justify-between mx-4 mt-4">
-            <div className="flex justify-center items-center px-2 w-10 h-10 bg-gray-900 rounded-full animate-pulse">
-              <span className="text-green-500 font-extralight">
-                {items?.count}
-              </span>
-            </div>
-            <div className="flex flex-row gap-x-4">
-            <Button
-                onClick={() => getData()}
-                size="default"
-              >
-                <span className="">All</span>
-            </Button>
-            <Button
-                onClick={() => getData('/status/lendo')}
-                size="default"
-              >
-                <span className="">Lendo</span>
-            </Button>
-            <Button
-                onClick={() => getData('/status/vouLer')}
-                size="default"
-              >
-                <span className="">Vou Ler</span>
-            </Button>
-            <Button
-                onClick={() => getData('/status/concluido')}
-                size="default"
-              >
-                <span className="">Concluído</span>
-            </Button>
-            </div>
-            <div className="flex p-1 w-96 justify-center">
-              <InputLabel
-                onChange={e => setSearch(e.target.value)}
-                value={search}
-                onKeyDown={handleSearch}
-                typeInput="text"
-                model='search'
-              >Search</InputLabel>
-            </div>
-            <Button
-                onClick={handleOpen}
-                size="default"
-              >
-                <span className="">Cadastrar</span>
-            </Button>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4 p-4 overflow-auto">
-            {
-              items &&
-              items?.data?.map(i => (
-                <Card
-                  key={i.id}
-                  id={i.id}
-                  name={i.name}
-                  chapter={i.chapter}
-                  status={i.status}
-                  image={i.imageUrl}
-                  type={i.type}
-                  newScans={i.scan}
-                  handleButtonChangeAdd={() => handleChangeChapter(i.id, 'add')}
-                  handleButtonChangeRemove={() => handleChangeChapter(i.id, 'remove')}
-                  handleChangeChapter={handleModifyChapter}
-                />
-              ))
-            }
-          </div>
+      <div className="flex flex-col bg-gray-800 text-white border-2 border-green-200">
+
+        <div>
+          <FiltersAnimeList
+            quantyItems={items?.count as number}
+            getData={getData}
+            handleSearch={handleSearch}
+            search={search}
+            handleOpen={handleOpen}
+            handlesetSearch={handlesetSearch}
+          />
         </div>
+
+        <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-rows-auto auto-cols-max justify-center items-center gap-4 p-4">
+          {
+            items &&
+            items?.data?.map(i => (
+              <Card
+                key={i.id}
+                id={i.id}
+                name={i.name}
+                chapter={i.chapter}
+                status={i.status}
+                image={i.imageUrl}
+                type={i.type}
+                newScans={i.scan}
+                handleButtonChangeAdd={() => handleChangeChapter(i.id, 'add')}
+                handleButtonChangeRemove={() => handleChangeChapter(i.id, 'remove')}
+                handleChangeChapter={handleModifyChapter}
+              />
+            ))
+          }
+        </div>
+      </div>
     </div>
   )
 }
