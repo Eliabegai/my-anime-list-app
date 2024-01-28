@@ -69,44 +69,6 @@ export const Card = ({name, status, type, chapter, image, newScans, _id, handleB
 
         </div>
 
-        
-        {/* <ul>
-          <li className="w-36">
-            <Tooltip label={name || 'Undefined'}>
-              <p className="text-base font-semibold truncate overflow-hidden"> {name || 'Undefined'} </p>
-            </Tooltip>
-          </li>
-          <li>
-            <a href={newScans?.url} className="border-b border-cyan-400 text-cyan-400 text-sm" target="_blank" rel='noopener' >{newScans?.name} </a>
-          </li>
-          <li>
-            Status: {status}
-          </li>
-          <li>
-            Type: {type}
-          </li>
-          <li>
-            Chapter:
-            <span className="">
-              <input 
-              className="outline-none border border-green-600 rounded w-24 flex justify-center items-center bg-transparent text-center" 
-              type="text" 
-              value={value} 
-              onChange={handleModifyChapter}
-              onKeyDown={onKeyDown}
-              placeholder="chapter" 
-              />
-            </span>
-          </li>
-        </ul> */}
-        
-        {/* 
-        <div className="container border flex justify-around p-1">
-          <Button onClick={handleButtonChangeRemove as () => void} size="small">-</Button>
-          <Button onClick={handleButtonChangeAdd as () => void} size="small">+</Button>
-        </div>
-         */}
-
       </div>
     </div>
   )

@@ -216,13 +216,16 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     } 
     if(type === 'remove') {
       newChapter = newChapter - 1
-
     }
-    // if (type === 'change') {
-    //   newChapter = value
-    // }
+    if (type === 'change') {
+      if(typeof value === 'string'){
+        newChapter = +value
+      }
+    }
 
     const chapter = newChapter.toString()
+
+    console.log(chapter)
     
     const newData = {
       "chapter": chapter,
