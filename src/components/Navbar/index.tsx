@@ -5,10 +5,10 @@ import ImageDragon from '../../img/dragon.png'
 export const Navbar = () => {
   return(
     <nav className="bg-gray-900 flex flex-row items-center justify-center">
-      <div className="w-full flex items-center justify-between mx-auto p-4">
+      <div className="w-full flex items-center justify-between mx-auto p-1">
         <Link to={`/`} className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src={ImageDragon} alt="logo dragon" className="w-12 h-12 bg-white rounded-full" />
-          <span className="self-center text-2xl font-semibold text-white">My Anime List</span>
+          <img src={ImageDragon} alt="logo dragon" className="w-10 h-10 bg-white rounded-full" />
+          <span className="self-center text-xl font-semibold text-white">My Anime List</span>
         </Link>
 
         <div className="flex w-auto items-center justify-center" id="navbar-dropdown">
