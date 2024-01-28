@@ -8,7 +8,6 @@ export const Card = ({name, status, type, chapter, image, scans, newScans, id, h
   const [ value, setValue ] = useState(chapter || 0)
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log(event.key)
     if(event.key === 'Enter') {
       if(typeof handleChangeChapter === 'function')
       handleChangeChapter(value, id as number)
@@ -43,7 +42,7 @@ export const Card = ({name, status, type, chapter, image, scans, newScans, id, h
             <span className="flex justify-center items-centers">
               <input 
               className="outline-none border-2 border-green-600 rounded w-24 flex justify-center items-center bg-transparent text-center" 
-              type="number" 
+              type="text" 
               value={value} 
               onChange={handleModifyChapter}
               onKeyDown={onKeyDown}

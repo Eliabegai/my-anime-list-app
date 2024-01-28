@@ -79,8 +79,8 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, type:string) => {
     event.preventDefault()
-    if(type === 'nameAnime') {
-    }
+    if(type === 'nameAnime') {}
+
     switch(type) {
       case 'nameAnime':
         setNameAnime(event.target.value);
@@ -128,7 +128,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
       return response.json();
         }).then(data =>
            setItems(data)
-        ).catch(e => console.log(e))
+        ).catch(e => alert(e))
 
   }
 
@@ -270,7 +270,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
         </Modal>
       </div>
 
-      <div className="flex flex-col bg-gray-800 text-white border-2 border-green-200">
+      <div className="flex flex-col w-auto h-screen bg-gray-800 text-white border overflow-scroll">
 
         <div>
           <FiltersAnimeList
@@ -283,7 +283,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
           />
         </div>
 
-        <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-rows-auto auto-cols-max justify-center items-center gap-4 p-4">
+        <div className="2xl:flex 2xl:flex-wrap grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-rows-auto auto-cols-max justify-center items-center gap-4 p-4">
           {
             items &&
             items?.data?.map(i => (

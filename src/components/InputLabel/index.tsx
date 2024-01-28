@@ -11,7 +11,7 @@ type InputLabelProps = {
 
 export const InputLabel = ({ children, placeholder, value, onChange, typeInput, onKeyDown, model }:InputLabelProps) => {
   return(
-    <div className=" w-full">
+    <div className="flex w-full">
       {
         model === 'search' ?
           <label className="absolute ml-3 -mt-3 text-md font-medium backdrop-blur-sm rounded">
@@ -28,7 +28,7 @@ export const InputLabel = ({ children, placeholder, value, onChange, typeInput, 
       value={value}
       onChange={onChange}
       onKeyDown={onKeyDown}
-      className={`bg-gray-700 border border-green-500 text-white text-sm rounded-md block w-full p-3 placeholder-gray-700`}
+      className={`bg-gray-700 border border-green-500 text-white text-sm rounded-md flex w-full p-3 placeholder-gray-700`}
       />
   </div>
   )
