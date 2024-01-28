@@ -20,7 +20,7 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         className={`
         flex items-center justify-center
         w-auto h-6 text-sm p-3 text-white 
-        border-2 rounded-lg border-green-500 
+        border rounded-lg border-green-500 
         data-[type=bold]:font-bold 
         hover:bg-green-700 
         active:bg-blue-700
@@ -39,7 +39,7 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         className={`
         flex items-center justify-center
         w-auto h-8 text-sm p-3 text-white 
-        border-2 rounded-md border-green-500 
+        border rounded-md border-green-500 
         data-[type=bold]:font-bold 
         hover:bg-green-700 
         active:bg-blue-700
@@ -58,7 +58,7 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         className={`
         flex items-center justify-center
         w-auto h-12 text-lg p-3 text-white 
-        border-2 rounded-xl border-green-500 
+        border rounded-xl border-green-500 
         data-[type=bold]:font-bold 
         hover:bg-green-700 
         active:bg-blue-700
