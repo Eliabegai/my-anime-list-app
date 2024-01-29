@@ -313,6 +313,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
               />
             ))
           }
+
         </div>
       </div>
     </div>

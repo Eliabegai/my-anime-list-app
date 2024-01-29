@@ -29,7 +29,7 @@ export const Card = ({name, status, type, chapter, image, newScans, _id, handleB
       
       <div className="box-content flex flex-col w-56 h-auto ml-2 p-2">
 
-        <span className="">
+        <span>
         <Tooltip label={name || 'Undefined'}>
           <p className="text-base font-semibold truncate overflow-hidden"> {name || 'Undefined'} </p>
         </Tooltip>
@@ -47,20 +47,19 @@ export const Card = ({name, status, type, chapter, image, newScans, _id, handleB
           Type: {type}
         </span>
         <div className="box-content flex flex-row gap-x-1">
-
           <span className="text-sm">
             Chapter:
           </span>
-            <span className="text-base">
-              <input 
+          <span className="text-base">
+            <input 
               className="outline-none border border-green-300 text-center rounded w-20 bg-transparent" 
               type="text" 
               value={value} 
               onChange={handleModifyChapter}
               onKeyDown={onKeyDown}
               placeholder="chapter" 
-              />
-            </span>
+            />
+          </span>
 
           <div className="flex justify-around">
             <Button onClick={handleButtonChangeRemove as () => void} size="small">-</Button>
