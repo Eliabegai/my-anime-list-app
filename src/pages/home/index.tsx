@@ -224,8 +224,6 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     }
 
     const chapter = newChapter.toString()
-
-    console.log(chapter)
     
     const newData = {
       "chapter": chapter,
@@ -239,11 +237,11 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   }
 
   const handleSearch = (e:React.KeyboardEvent<HTMLInputElement>) => {
-
     if(e.key === 'Enter' && search !== '') {
       getData(`name/${search}`)
     } else {
-      getData()
+      if(search === '')
+        getData()
     }
 
   }
