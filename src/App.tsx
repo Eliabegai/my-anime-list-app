@@ -14,7 +14,7 @@ export default function App() {
     <div>
       <Navbar/>
 
-      <body>
+      <body className="flex w-auto h-screen overflow-auto">
         <Home 
           handleOpen={handleOpen}
           open={open}

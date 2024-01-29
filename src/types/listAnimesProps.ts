@@ -4,20 +4,20 @@ type ScanProps = {
 }
 
 export type CardProps = {
-  id?: number
+  _id?: string
   name?: string
   image?: string
   type?: 'manga' | 'manhua' | 'manhwa' | 'novel' | string
-  chapter?: number
+  chapter?: string
   status?: 'Lendo' | 'Vou Ler' | 'Concluído' | string
   scans?: ScanProps[]
   newScans?: {
-    name: string
-    url: string
+    name?: string
+    url?: string
   }
   handleButtonChangeAdd?: () => void
   handleButtonChangeRemove?: () => void
-  handleChangeChapter?: (value: number, id: number) => void
+  handleChangeChapter?: (value: string, id: string) => void
 }
 
 export type Photo = {
@@ -26,14 +26,19 @@ export type Photo = {
 } 
 
 export type GetItensProps = {
-  chapter: number
-  id: number
-  imageUrl: string
-  name : string
-  scan: {
-    name: string
-    url: string
+  chapter?: string
+  _id?: string
+  imageUrl?: string
+  name?: string
+  scan?: {
+    name?: string
+    url?: string
   }
-  status : string
-  type: string
+  status?: string
+  type?: string
+}
+
+export type getItemsById = {
+  data: GetItensProps,
+  count: number
 }

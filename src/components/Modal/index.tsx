@@ -13,9 +13,10 @@ type ModalProps = {
   handleOpen?: () => void
   onConfirm?: (event: React.MouseEvent<MouseEvent>) => void
   children: React.ReactNode
+  message?: boolean
 }
  
-export const Modal = ({ openModal, handleOpen, onConfirm, children }:ModalProps) => {
+export const Modal = ({ openModal, handleOpen, onConfirm, children, message }:ModalProps) => {
 
   return (
     <>
@@ -25,21 +26,33 @@ export const Modal = ({ openModal, handleOpen, onConfirm, children }:ModalProps)
         placeholder={''} 
         className="flex flex-col bg-gray-800 m-auto p-2 w-[400px] border-2 border-green-400 overflow-auto"
       >
-      
-       <DialogHeader placeholder={'header-modal'} className="text-white">Cadastro</DialogHeader>
+
+        {
+          !message &&
+            <DialogHeader placeholder={'header-modal'} className="text-white">Cadastro</DialogHeader>
+        }
 
         <DialogBody placeholder={'body-modal'}>
-          <div className="flex justify-center items-center overflow-auto">
-            {children}
+          {
+            !message &&
+            <div className="flex justify-center items-center overflow-auto">
+              {children}
+            </div>
+          }
+          <div className="flex justify-center items-center overflow-auto p-4">
+              {children}
           </div>
-        </DialogBody>
 
-        <DialogFooter placeholder={"footer-modal"}>
-          <div className="flex flex-row w-full justify-between -mb-4">
-            <Button onClick={handleOpen as () => void} size="large" > Cancel </Button>
-            <Button onClick={onConfirm as () => void} typeButton="bold" size="large" >Confirm</Button>
-          </div>
-        </DialogFooter>
+        </DialogBody>
+        {
+          !message &&
+          <DialogFooter placeholder={"footer-modal"}>
+            <div className="flex flex-row w-full justify-between -mb-4">
+              <Button onClick={handleOpen as () => void} size="large" > Cancel </Button>
+              <Button onClick={onConfirm as () => void} typeButton="bold" size="large" >Confirm</Button>
+            </div>
+          </DialogFooter>
+        }
       </Dialog>
     </>
   );

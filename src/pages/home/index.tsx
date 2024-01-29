@@ -5,9 +5,11 @@ import { Card } from "../../components/Card";
 import { Modal } from "../../components/Modal";
 import { useEffect, useState } from "react";
 import { FormCadastroAnime } from "../../components/Formulario/FormCadastroAnime";
-import { GetItensProps } from "../../types/listAnimesProps";
+import { GetItensProps, getItemsById } from "../../types/listAnimesProps";
 import { Button } from "../../components/Button";
 import { InputLabel } from "../../components/InputLabel";
+import { FiltersAnimeList } from "../../components/Filters";
+import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 
 type HomeProps = {
   handleOpen: () => void
@@ -27,10 +29,12 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const [items, setItems] = useState<{data: GetItensProps[], count: number}>()
   const [search, setSearch] = useState('')
   const urlAPI = process.env.REACT_APP_URL_API
+  const [loading, setLoading] = useState(false)
+
+
   useEffect(() => {
     getData()
   },[])
-
 
   const clearForm = () => {
     handleOpen()
@@ -78,8 +82,8 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, type:string) => {
     event.preventDefault()
-    if(type === 'nameAnime') {
-    }
+    if(type === 'nameAnime') {}
+
     switch(type) {
       case 'nameAnime':
         setNameAnime(event.target.value);
@@ -127,7 +131,8 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
       return response.json();
         }).then(data =>
            setItems(data)
-        ).catch(e => console.log(e))
+        ).then(() => setLoading(false))
+        .catch(e => alert(e))
 
   }
 
@@ -175,7 +180,9 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
       });
   }
 
-  const handleSubmitUpdate = async (data:GetItensProps, id:number) => {
+  const handleSubmitUpdate = async (data:GetItensProps, id:string) => {
+
+    setLoading(true)
 
     await fetch(`${urlAPI}${id}`, {
       method: "PATCH",
@@ -193,56 +200,60 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const handleSubmitCadastro = () => {
     handleCadastroManga()
   };
-
-  const handleChangeChapter = async (id?: number, type?: string, value?: number) => {
-
-    let newValue
+  
+  const handleChangeChapter = async (id?: string, type?: string, value?: string) => {
+    const getChapter = await fetch(`${urlAPI}${id}`).then(response => {
+        return response.json()
+      }).then(item => 
+        {return item?.data.chapter}
+        )
     
-    const response = await fetch(`${urlAPI}${id}`);
-    const data:GetItensProps = await response.json();
+    let newChapter = parseFloat(getChapter)
+
     if(type === 'add') {
-      newValue = data?.chapter + 1
+      newChapter = newChapter + 1
+
     } 
     if(type === 'remove') {
-      newValue = data?.chapter - 1
+      newChapter = newChapter - 1
     }
     if (type === 'change') {
-      newValue = value
+      if(typeof value === 'string'){
+        newChapter = +value
+      }
     }
+
+    const chapter = newChapter.toString()
     
     const newData = {
-      "id": id,
-      "name": data?.name,
-      "type": data.type,
-      "chapter": newValue,
-      "status": data?.status,
-      "scan": {
-        "name": data?.scan.name,
-        "url": data?.scan.url
-      },
-      "imageUrl": data?.imageUrl
-    } as GetItensProps
+      "chapter": chapter,
+    }
 
-    handleSubmitUpdate(newData, id as number)
+    handleSubmitUpdate(newData, id as string)
   }
 
-  const handleModifyChapter = (value:number, id: number) => {
+  const handleModifyChapter = (value:string, id: string) => {
     handleChangeChapter(id, 'change', value)
   }
 
   const handleSearch = (e:React.KeyboardEvent<HTMLInputElement>) => {
-
     if(e.key === 'Enter' && search !== '') {
       getData(`name/${search}`)
     } else {
-      getData()
+      if(search === '')
+        getData()
     }
 
   }
 
+  const handlesetSearch = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+  }
+
 
   return(
-    <div>
+    <div className="flex w-auto h-auto overflow-auto">
+      <div>
         <Modal
           handleOpen={handleOpen}
           onConfirm={handleSubmitCadastro}
@@ -262,77 +273,49 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
             />
           </div>
         </Modal>
+      </div>
 
-        <div className="flex flex-col w-auto h-[99vh] bg-gray-800 text-white border-2 border-green-200">
-          <div className="flex flex-row justify-between mx-4 mt-4">
-            <div className="flex justify-center items-center px-2 w-10 h-10 bg-gray-900 rounded-full animate-pulse">
-              <span className="text-green-500 font-extralight">
-                {items?.count}
-              </span>
-            </div>
-            <div className="flex flex-row gap-x-4">
-            <Button
-                onClick={() => getData()}
-                size="default"
-              >
-                <span className="">All</span>
-            </Button>
-            <Button
-                onClick={() => getData('status/lendo')}
-                size="default"
-              >
-                <span className="">Lendo</span>
-            </Button>
-            <Button
-                onClick={() => getData('status/vouLer')}
-                size="default"
-              >
-                <span className="">Vou Ler</span>
-            </Button>
-            <Button
-                onClick={() => getData('status/concluido')}
-                size="default"
-              >
-                <span className="">Concluído</span>
-            </Button>
-            </div>
-            <div className="flex p-1 w-96 justify-center">
-              <InputLabel
-                onChange={e => setSearch(e.target.value)}
-                value={search}
-                onKeyDown={handleSearch}
-                typeInput="text"
-                model='search'
-              >Search</InputLabel>
-            </div>
-            <Button
-                onClick={handleOpen}
-                size="default"
-              >
-                <span className="">Cadastrar</span>
-            </Button>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4 p-4 overflow-auto">
-            {
-              items &&
-              items?.data?.map(i => (
-                <Card
-                  key={i.id}
-                  id={i.id}
-                  name={i.name}
-                  chapter={i.chapter}
-                  status={i.status}
-                  image={i.imageUrl}
-                  type={i.type}
-                  newScans={i.scan}
-                  handleButtonChangeAdd={() => handleChangeChapter(i.id, 'add')}
-                  handleButtonChangeRemove={() => handleChangeChapter(i.id, 'remove')}
-                  handleChangeChapter={handleModifyChapter}
-                />
-              ))
-            }
-          </div>
+      <div className="flex flex-col w-auto text-white">
+
+        <div className="bg-gray-900 border-t border-gray-600">
+          <FiltersAnimeList
+            quantyItems={items?.count as number}
+            getData={getData}
+            handleSearch={handleSearch}
+            search={search}
+            handleOpen={handleOpen}
+            handlesetSearch={handlesetSearch}
+          />
         </div>
+
+        <Modal
+          openModal={loading}
+          message={true}
+        >
+          {loading && <p className="text-white animate-bounce">Carregando...</p>}
+        </Modal>
+        <div className="flex flex-wrap w-screen h-[100vh] justify-center items-center gap-4 p-4 bg-gray-800 overflow-auto">
+          {
+            items && !loading &&
+            items?.data?.map(i => (
+              <Card
+                key={i._id}
+                _id={i._id}
+                name={i.name}
+                chapter={i.chapter}
+                status={i.status}
+                image={i.imageUrl}
+                type={i.type}
+                newScans={i?.scan}
+                handleButtonChangeAdd={() => handleChangeChapter(i._id, 'add')}
+                handleButtonChangeRemove={() => handleChangeChapter(i._id, 'remove')}
+                handleChangeChapter={handleModifyChapter}
+              />
+            ))
+          }
+
+        </div>
+      </div>
     </div>
   )
 }
