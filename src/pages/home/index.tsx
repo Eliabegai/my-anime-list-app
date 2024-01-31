@@ -252,7 +252,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
 
   return(
-    <div className="flex w-auto h-auto overflow-auto">
+    <div className="flex w-full h-auto mx-auto container overflow-auto">
       <div>
         <Modal
           handleOpen={handleOpen}
@@ -275,7 +275,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
         </Modal>
       </div>
 
-      <div className="flex flex-col w-auto text-white">
+      <div className="flex flex-col text-white">
 
         <div className="bg-gray-900 border-t border-gray-600">
           <FiltersAnimeList
@@ -294,7 +294,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
         >
           {loading && <p className="text-white animate-bounce">Carregando...</p>}
         </Modal>
-        <div className="flex flex-wrap w-screen h-[100vh] justify-center items-center gap-4 p-4 bg-gray-800 overflow-auto">
+        <div className="flex flex-wrap w-full h-[100vh] justify-center items-center gap-4 p-4 bg-gray-800 overflow-auto">
           {
             items && !loading &&
             items?.data?.map(i => (

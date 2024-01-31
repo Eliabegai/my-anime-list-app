@@ -4,7 +4,7 @@ import ImageDragon from '../../img/dragon.png'
 
 export const Navbar = () => {
   return(
-    <nav className="bg-gray-900 flex flex-row items-center justify-center">
+    <nav className="flex flex-row container mx-auto items-center justify-center bg-gray-900">
       <div className="w-full flex items-center justify-between mx-auto p-1">
         <Link to={`/`} className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={ImageDragon} alt="logo dragon" className="w-10 h-10 bg-white rounded-full" />
