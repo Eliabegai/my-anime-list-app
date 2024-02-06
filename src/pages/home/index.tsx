@@ -5,11 +5,8 @@ import { Card } from "../../components/Card";
 import { Modal } from "../../components/Modal";
 import { useEffect, useState } from "react";
 import { FormCadastroAnime } from "../../components/Formulario/FormCadastroAnime";
-import { GetItensProps, getItemsById } from "../../types/listAnimesProps";
-import { Button } from "../../components/Button";
-import { InputLabel } from "../../components/InputLabel";
+import { GetItensProps } from "../../types/listAnimesProps";
 import { FiltersAnimeList } from "../../components/Filters";
-import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 
 type HomeProps = {
   handleOpen: () => void
@@ -127,7 +124,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     let newFilter = ''
     if(filter) newFilter = filter
 
-    await fetch(`${urlAPI}${newFilter}`).then(response =>{
+    await fetch(`${urlAPI}/animes/${newFilter}`).then(response =>{
       return response.json();
         }).then(data =>
            setItems(data)
@@ -167,7 +164,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
       "imageUrl": url
     }
 
-    await fetch(`${urlAPI}`, {
+    await fetch(`${urlAPI}/animes`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -184,7 +181,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
     setLoading(true)
 
-    await fetch(`${urlAPI}${id}`, {
+    await fetch(`${urlAPI}/animes/${id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',
@@ -202,7 +199,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   };
   
   const handleChangeChapter = async (id?: string, type?: string, value?: string) => {
-    const getChapter = await fetch(`${urlAPI}${id}`).then(response => {
+    const getChapter = await fetch(`${urlAPI}/animes/${id}`).then(response => {
         return response.json()
       }).then(item => 
         {return item?.data.chapter}

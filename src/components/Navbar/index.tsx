@@ -43,6 +43,21 @@ export const Navbar = () => {
                   Contact
                 </Link>
             </li>
+            <li>
+              <Link 
+                to={`/login`} 
+                className={`
+                  flex items-center justify-center
+                  w-auto h-6 text-sm p-3 text-white 
+                  border-2 rounded-lg border-green-500 
+                  data-[type=bold]:font-bold 
+                  hover:bg-green-700 
+                  active:bg-blue-700
+                `}
+                >
+                  Login
+                </Link>
+            </li>
           </ul>
         </div>
       </div>
