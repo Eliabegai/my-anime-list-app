@@ -80,7 +80,7 @@ export const Login= () => {
             </div>
             <div className="flex justify-between text-sm mb-4">
               <div className="">
-                <input type="checkbox"/>
+                <input type="checkbox" placeholder="check"/>
                 <label>Remember me</label>
               </div>
 
