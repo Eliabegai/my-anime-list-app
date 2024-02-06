@@ -1,40 +1,50 @@
-import { Navbar } from "../../components/Navbar"
-import { useState } from "react"
+import React from "react";
+import { Navbar } from "../../components/Navbar";
+import { useState } from "react";
 
-import imageDragon from '../../img/dragon.png'
+import imageDragon from "../../img/dragon.png";
+import { Input } from "../../components/Input";
 
 
 export const Login= () => {
 
-  const urlAPI = process.env.REACT_APP_URL_API
+  const urlAPI = process.env.REACT_APP_URL_API;
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
 
 
 
   const handleSubmit = async (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     const login = {
       username: username,
       password: password
-    }
+    };
 
     await fetch(`${urlAPI}/auth/login`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(login),
     })
       .then(async (response) => {
-        let resposta = await response.json()
-        localStorage.setItem("keyPermissionAnime", await resposta?.access_token)
-        console.log(resposta.access_token)
-      })
+        const resposta = await response.json();
+        localStorage.setItem("keyPermissionAnime", await resposta?.access_token);
+        console.log(resposta.access_token);
+      });
   };
+
+  function handleChangePassword(event: React.ChangeEvent<HTMLInputElement>) {
+    setPassword(event.target.value);
+  }
+
+  function handleChangeUsername(event: React.ChangeEvent<HTMLInputElement>) {
+    setUsername(event.target.value);
+  }
 
   return(
     <div className="flex flex-col">
@@ -49,36 +59,30 @@ export const Login= () => {
           <form>
             <div className="container flex flex-col mx-auto p-4">
 
-              <div className="relative flex flex-col my-5">
-                <input 
-                  className={`
-                    w-full h-14 text-base bg-transparent px-5 py-5 border rounded-3xl placeholder-transparent border-green-500
-                    group
-                  `} 
-                  type="text" 
-                  placeholder="Username"
+              <div className="relative flex flex-col my-5 group">
+                <Input
+                  label="Username"
+                  dataValue={username === ""}
+                  onChange={handleChangeUsername}
+                  type="text"
                   value={username}
-                  onChange={event => setUsername(event.target.value)}
                 />
-                {/* <label className="absolute top-4 left-6 group-focus:-top-3">Username</label> */}
               </div>
 
-              <div className="relative flex flex-col my-5">
-                <input 
-                  className={`
-                    w-full h-14 text-base bg-transparent px-5 py-5 border rounded-3xl placeholder-transparent border-green-500
-                    group
-                  `} 
-                  type="password" 
-                  placeholder="Password"
+              <div className="relative flex flex-col my-5 group">
+                <Input
+                  label="Password"
+                  dataValue={password === ""}
+                  onChange={handleChangePassword}
+                  type="text"
                   value={password}
-                  onChange={event => setPassword(event.target.value)}
                 />
-                {/* <label className="absolute top-4 left-6 group-[]:">Password</label> */}
               </div>
 
             </div>
+
             <div className="flex justify-between text-sm mb-4">
+
               <div className="">
                 <input type="checkbox" placeholder="check"/>
                 <label>Remember me</label>
@@ -94,7 +98,7 @@ export const Login= () => {
               type="submit" 
               value='Submint'
               onClick={event => handleSubmit(event)}
-              >
+            >
                 Submit
             </button>
 
@@ -106,5 +110,5 @@ export const Login= () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
