@@ -1,24 +1,22 @@
-import { ChangeEvent } from "react"
-
 export type InputProps= {
   dataValue: boolean
   value: string
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   type: string
   label: string
   placeholder?: string
-}
+};
 
 export const Input = ({dataValue, value, onChange, type, label, placeholder}: InputProps) => {
   return(
     <>
-      <input 
+      <input
         className={`
           w-full h-14 text-base bg-transparent px-5 py-5 border rounded-3xl placeholder-transparent border-green-500
           group
         `} 
         type={type} 
-        placeholder={placeholder || 'text'}
+        placeholder={placeholder || "text"}
         value={value}
         onChange={onChange}
       />
@@ -29,5 +27,5 @@ export const Input = ({dataValue, value, onChange, type, label, placeholder}: In
           {label}
       </label>
     </>
-  )
-}
+  );
+};
