@@ -1,18 +1,30 @@
 module.exports = {
+  root: true,
   extends: [
     "semistandard",
     "eslint:recommended"
   ],
+  plugins: [
+    "import",
+    "react",
+    "@typescript-eslint"
+  ],
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
+    node: true
   },
   parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+      tsx: true
+    },
     ecmaVersion: "latest",
     sourceType: "module"
   },
   rules: {
     "no-var": "error",
+    "react/react-in-jsx-scope": "off",
     semi: [ "error",
       "always" ],
     quotes: [ "error",
