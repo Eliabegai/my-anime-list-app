@@ -5,9 +5,12 @@ import { useState } from "react"
 import imageDragon from "../../img/dragon.png"
 import { Input } from "../../components/Input"
 import { Modal } from "../../components/Modal"
+import { useNavigate } from "react-router-dom"
 
 
 export const Login= () => {
+
+  const navigate = useNavigate()
 
   const urlAPI = process.env.REACT_APP_URL_API
 
@@ -34,9 +37,11 @@ export const Login= () => {
       .then(async (response) => {
         const resposta = await response.json()
         localStorage.setItem("keyPermissionAnime", await resposta?.access_token)
+        setLoading(false)
       })
       .then(()=>{
-        setLoading(false)
+        //navigate to /animes
+        navigate('/animes')
       })
   }
 
