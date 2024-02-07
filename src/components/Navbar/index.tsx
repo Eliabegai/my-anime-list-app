@@ -15,7 +15,7 @@ export const Navbar = () => {
           <ul className="flex flex-row font-medium mt-4 rounded-lg space-x-4">
             <li>
               <Link 
-                to={`/`} 
+                to={`/animes`} 
                 className={`
                   flex items-center justify-center
                   w-auto h-6 text-sm p-3 text-white 
@@ -45,7 +45,7 @@ export const Navbar = () => {
             </li>
             <li>
               <Link 
-                to={`/login`} 
+                to={`/`} 
                 className={`
                   flex items-center justify-center
                   w-auto h-6 text-sm p-3 text-white 

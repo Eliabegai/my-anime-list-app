@@ -13,7 +13,7 @@ import { Login } from './pages/login';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/animes",
     element: <App />,
   },
   {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <Contact />,
   },
   {
-    path: "/login",
+    path: "/",
     element: <Login />,
   },
 ]);
