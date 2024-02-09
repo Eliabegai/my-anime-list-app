@@ -17,6 +17,7 @@ export const Login= () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState("Carregando ...")
 
   const handleSubmit = async (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault()
@@ -27,22 +28,26 @@ export const Login= () => {
       password: password
     };
 
-    await fetch(`${urlAPI}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(login),
-    })
-      .then(async (response) => {
-        const resposta = await response.json()
-        localStorage.setItem("keyPermissionAnime", await resposta?.access_token)
-        setLoading(false)
+    try{
+      await fetch(`${urlAPI}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(login),
       })
-      .then(()=>{
-        //navigate to /animes
-        navigate('/animes')
-      })
+        .then(async (response) => {
+          const resposta = await response.json()
+
+          if(resposta?.statusCode === 401){
+            setMessage('Login Inválido!')
+          } else {
+            localStorage.setItem("keyPermissionAnime", await resposta?.access_token)
+            setLoading(false)
+            navigate('/animes')
+          }
+        })
+  } catch {return}
   }
 
   function handleChangePassword(event: React.ChangeEvent<HTMLInputElement>) {
@@ -62,8 +67,9 @@ export const Login= () => {
         <Modal
           openModal={loading}
           message={true}
+          handleOpen={() => setLoading(false)}
         >
-          {loading && <p className="text-white animate-bounce">Carregando...</p>}
+          {loading && <p className="text-white animate-bounce">{message}</p>}
         </Modal>
         
         <div className="container flex w-auto border rounded-3xl h-auto items-center justify-center p-16">

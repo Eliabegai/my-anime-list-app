@@ -39,8 +39,11 @@ export const Modal = ({ openModal, handleOpen, onConfirm, children, message }:Mo
               {children}
             </div>
           }
-          <div className="flex justify-center items-center overflow-auto p-4">
+          <div className="flex flex-col justify-center items-center overflow-auto p-4 text-2xl">
               {children}
+              <div className="w-full mt-4 flex justify-end -mb-4 ">
+                <Button onClick={handleOpen as () => void} size="large" > Retornar </Button>
+              </div>
           </div>
 
         </DialogBody>

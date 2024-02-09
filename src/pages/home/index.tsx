@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { FormCadastroAnime } from "../../components/Formulario/FormCadastroAnime";
 import { GetItensProps } from "../../types/listAnimesProps";
 import { FiltersAnimeList } from "../../components/Filters";
+import { useNavigate } from "react-router-dom";
 
 type HomeProps = {
   handleOpen: () => void
@@ -15,6 +16,7 @@ type HomeProps = {
 
 export const Home = ({ handleOpen, open }:HomeProps) => {
 
+  const navigate = useNavigate()
 
   const [nameAnime, setNameAnime] = useState('')
   const [typeAnime, setTypeAnime] = useState('')
@@ -28,6 +30,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const urlAPI = process.env.REACT_APP_URL_API
   const [loading, setLoading] = useState(false)
 
+  const permissionToken = localStorage.getItem("keyPermissionAnime")
 
   useEffect(() => {
     getData()
@@ -124,12 +127,27 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     let newFilter = ''
     if(filter) newFilter = filter
 
-    await fetch(`${urlAPI}/animes/${newFilter}`).then(response =>{
-      return response.json();
-        }).then(data =>
-           setItems(data)
-        ).then(() => setLoading(false))
-        .catch(e => alert(e))
+    if(permissionToken === null){
+      navigate("/")
+    }
+
+    try{
+      await fetch(`${urlAPI}/animes/${newFilter}`,{
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${permissionToken}`
+        }
+      }).then(response =>{
+        return response.json();
+          }).then(data =>
+             setItems(data)
+          ).then(() => setLoading(false))
+    } catch {
+      alert('Não autorizado')
+    }
+
 
   }
 
