@@ -22,7 +22,11 @@ export const Input = ({dataValue, value, onChange, type, label, placeholder}: In
       />
       <label 
         data-password={dataValue} 
-        className="absolute top-4 left-6 group-focus-within:-top-6 data-[password='false']:-top-6"
+        className={`
+          absolute top-4 left-6 duration-200 
+          group-focus-within:-top-6 group-focus-within:duration-200
+          data-[password='false']:-top-6 
+        `}
       >
           {label}
       </label>
