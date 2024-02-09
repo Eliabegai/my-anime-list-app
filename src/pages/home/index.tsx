@@ -8,13 +8,9 @@ import { FormCadastroAnime } from "../../components/Formulario/FormCadastroAnime
 import { GetItensProps } from "../../types/listAnimesProps";
 import { FiltersAnimeList } from "../../components/Filters";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../../components/Navbar";
 
-type HomeProps = {
-  handleOpen: () => void
-  open: boolean
-}
-
-export const Home = ({ handleOpen, open }:HomeProps) => {
+export const Home = () => {
 
   const navigate = useNavigate()
 
@@ -29,6 +25,8 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
   const [search, setSearch] = useState('')
   const urlAPI = process.env.REACT_APP_URL_API
   const [loading, setLoading] = useState(false)
+  const [ open, setOpen ] = useState(false);
+  const handleOpen = () => setOpen(!open);
 
   const permissionToken = localStorage.getItem("keyPermissionAnime")
 
@@ -128,7 +126,7 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
     if(filter) newFilter = filter
 
     if(permissionToken === null){
-      navigate("/")
+      navigate("/login")
     }
 
     try{
@@ -267,7 +265,8 @@ export const Home = ({ handleOpen, open }:HomeProps) => {
 
 
   return(
-    <div className="flex w-full h-auto mx-auto container overflow-auto">
+    <div className="flex flex-col w-full h-auto mx-auto container overflow-auto">
+      <Navbar />
       <div>
         <Modal
           handleOpen={handleOpen}

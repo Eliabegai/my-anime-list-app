@@ -45,7 +45,7 @@ export const Navbar = () => {
             </li>
             <li>
               <Link 
-                to={`/`} 
+                to={`/login`} 
                 className={`
                   flex items-center justify-center
                   w-auto h-6 text-sm p-3 text-white 

@@ -5,23 +5,23 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { Contact } from './pages/contact';
 import { Login } from './pages/login';
+import { Home } from './pages/home';
 
 const router = createBrowserRouter([
   {
     path: "/animes",
-    element: <App />,
+    element: <Home />,
   },
   {
     path: "/contact",
     element: <Contact />,
   },
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
   },
 ]);
