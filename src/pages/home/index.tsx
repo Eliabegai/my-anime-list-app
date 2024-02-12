@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
 
 export const Home = () => {
-
   const navigate = useNavigate()
 
   const [nameAnime, setNameAnime] = useState('')
@@ -27,7 +26,6 @@ export const Home = () => {
   const [loading, setLoading] = useState(false)
   const [ open, setOpen ] = useState(false);
   const handleOpen = () => setOpen(!open);
-
   const permissionToken = localStorage.getItem("keyPermissionAnime")
 
   useEffect(() => {
@@ -145,8 +143,6 @@ export const Home = () => {
     } catch {
       alert('Não autorizado')
     }
-
-
   }
 
   const postImage = async () => {
@@ -165,7 +161,6 @@ export const Home = () => {
   }
 
   const handleCadastroManga = async () => {
-
     const url = await postImage()
 
     const data = {
@@ -180,34 +175,42 @@ export const Home = () => {
       "imageUrl": url
     }
 
-    await fetch(`${urlAPI}/animes`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        clearForm()
-      });
+    try{
+      await fetch(`${urlAPI}/animes`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          clearForm()
+        });
+    } catch {
+      alert('Falha ao Cadastrar')
+    }
   }
 
   const handleSubmitUpdate = async (data:GetItensProps, id:string) => {
 
     setLoading(true)
 
-    await fetch(`${urlAPI}/animes/${id}`, {
-      method: "PATCH",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then(() => {
-        getData()
-      });
+    try{
+      await fetch(`${urlAPI}/animes/${id}`, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then(() => {
+          getData()
+        });
+    } catch {
+      alert('Houve um erro, Desculpe!')
+    }
   }
 
   const handleSubmitCadastro = () => {
@@ -267,6 +270,7 @@ export const Home = () => {
   return(
     <div className="flex flex-col w-full h-auto mx-auto container overflow-auto">
       <Navbar />
+      
       <div>
         <Modal
           handleOpen={handleOpen}
@@ -308,6 +312,7 @@ export const Home = () => {
         >
           {loading && <p className="text-white animate-bounce">Carregando...</p>}
         </Modal>
+
         <div className="flex flex-wrap w-full h-[100vh] justify-center items-center gap-4 p-4 bg-gray-800 overflow-auto">
           {
             items && !loading &&

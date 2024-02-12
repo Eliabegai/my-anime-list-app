@@ -1,8 +1,33 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import { jwtDecode } from "jwt-decode"
+import { Link, useSearchParams } from "react-router-dom"
 import ImageDragon from '../../img/dragon.png'
+import { Avatar } from "../Avatar"
+
+type TokenProps = {
+  exp: number
+  iat: number
+  rule: string
+  status: string
+  name: string
+  username: string
+}
 
 export const Navbar = () => {
+
+  const [name, setName] = useState('')
+  const permissionToken:string | null= localStorage.getItem("keyPermissionAnime")
+
+  useEffect(() => {
+    if(permissionToken !== null){
+      const decoded = jwtDecode<TokenProps>(permissionToken)
+      setName(decoded?.name)
+      console.log(decoded)
+    }
+  },[])
+
+
+
   return(
     <nav className="flex flex-row container mx-auto items-center justify-center bg-gray-900">
       <div className="w-full flex items-center justify-between mx-auto p-1">
@@ -10,6 +35,13 @@ export const Navbar = () => {
           <img src={ImageDragon} alt="logo dragon" className="w-10 h-10 bg-white rounded-full" />
           <span className="self-center text-xl font-semibold text-white">My Anime List</span>
         </Link>
+
+        <div className="flex flex-1 flex-row justify-center items-center">
+            <div className="mr-4">
+              <Avatar image={true} />
+            </div>
+            <span className="text-white text-center text-xl">Bem-vindo <strong className="text-2xl">{name}</strong>!</span>
+        </div>
 
         <div className="flex w-auto items-center justify-center" id="navbar-dropdown">
           <ul className="flex flex-row font-medium mt-4 rounded-lg space-x-4">
@@ -55,7 +87,9 @@ export const Navbar = () => {
                   active:bg-blue-700
                 `}
                 >
-                  Login
+                  {
+                    permissionToken === null ? "Login" : "Logout"
+                  }
                 </Link>
             </li>
           </ul>

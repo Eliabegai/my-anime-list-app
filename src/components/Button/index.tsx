@@ -1,8 +1,8 @@
 type ButtonProps = {
-  onClick: () => void
+  onClick?: () => void
   children: React.ReactNode
   typeButton?: string
-  size?: 'small' | 'default' | 'large'
+  size?: 'small' | 'default' | 'large' | 'avatar'
   className?: string
 }
 
@@ -60,6 +60,25 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         border rounded-xl border-green-500 
         data-[type=bold]:font-bold 
         hover:bg-green-700 
+        active:bg-blue-700
+        ${className}
+        `}
+      >
+        {children}
+      </button>
+    }
+    {
+      size === 'avatar' &&
+      <button 
+        onClick={onClick}
+        data-type={typeButton}
+        data-size={size}
+        className={`
+        flex items-center justify-center
+        w-12 h-12
+        border rounded-full border-green-500 
+        data-[type=bold]:font-bold 
+        hover:bg-green-400 
         active:bg-blue-700
         ${className}
         `}
