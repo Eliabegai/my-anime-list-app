@@ -5,12 +5,14 @@ import ImageDragon from '../../img/dragon.png'
 import { Avatar } from "../Avatar"
 
 type TokenProps = {
+  payload: {
+    rule: string
+    status: string
+    name: string
+    username: string
+  }
   exp: number
   iat: number
-  rule: string
-  status: string
-  name: string
-  username: string
 }
 
 export const Navbar = () => {
@@ -21,11 +23,14 @@ export const Navbar = () => {
   useEffect(() => {
     if(permissionToken !== null){
       const decoded = jwtDecode<TokenProps>(permissionToken)
-      setName(decoded?.name)
+      setName(decoded?.payload.name)
       console.log(decoded)
     }
   },[])
 
+  function handleLogout() {
+    localStorage.clear()
+  }
 
 
   return(
@@ -36,12 +41,18 @@ export const Navbar = () => {
           <span className="self-center text-xl font-semibold text-white">My Anime List</span>
         </Link>
 
-        <div className="flex flex-1 flex-row justify-center items-center">
-            <div className="mr-4">
-              <Avatar image={true} />
+        {
+          permissionToken &&
+
+            <div className="flex flex-1 flex-row justify-center items-center">
+                <div className="mr-4">
+                  <Avatar image={true} />
+                </div>
+                <span className="text-white text-center text-xl">Bem-vindo <strong className="text-2xl ml-2">{name}!</strong></span>
             </div>
-            <span className="text-white text-center text-xl">Bem-vindo <strong className="text-2xl">{name}</strong>!</span>
-        </div>
+
+        }
+
 
         <div className="flex w-auto items-center justify-center" id="navbar-dropdown">
           <ul className="flex flex-row font-medium mt-4 rounded-lg space-x-4">
@@ -77,7 +88,8 @@ export const Navbar = () => {
             </li>
             <li>
               <Link 
-                to={`/login`} 
+                to={`/login`}
+                onClick={handleLogout}
                 className={`
                   flex items-center justify-center
                   w-auto h-6 text-sm p-3 text-white 

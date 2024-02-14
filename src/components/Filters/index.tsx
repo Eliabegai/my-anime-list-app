@@ -13,6 +13,8 @@ type FilterAnimeListProps = {
 
 export const FiltersAnimeList = ({ quantyItems, getData, handleSearch, search, handleOpen, handlesetSearch }: FilterAnimeListProps) => {
 
+  const dragonShield = '../../img/dragon-shield.jpg'
+
   const handleChangeStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
     let status = e.target.value
