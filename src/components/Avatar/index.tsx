@@ -2,9 +2,10 @@ import { Button } from "../Button"
 
 type AvatarProps = {
   image:boolean
+  label:string
 }
 
-export const Avatar = ({image}: AvatarProps) => {
+export const Avatar = ({image, label}: AvatarProps) => {
   return(
     <div>
       <Button
@@ -17,7 +18,7 @@ export const Avatar = ({image}: AvatarProps) => {
           </div>
           :
           <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-700 rounded-full">
-              <span className="font-2xl text-green-500">EG</span>
+              <span className="font-2xl text-green-500">{label?.charAt(0).toUpperCase()}</span>
           </div>
         }
 

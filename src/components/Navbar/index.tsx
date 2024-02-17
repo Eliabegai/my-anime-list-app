@@ -46,7 +46,7 @@ export const Navbar = () => {
 
             <div className="flex flex-1 flex-row justify-center items-center">
                 <div className="mr-4">
-                  <Avatar image={true} />
+                  <Avatar image={false} label={name} />
                 </div>
                 <span className="text-white text-center text-xl">Bem-vindo <strong className="text-2xl ml-2">{name}!</strong></span>
             </div>
