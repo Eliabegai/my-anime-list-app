@@ -6,6 +6,7 @@ import imageDragon from "../../img/dragon.png"
 import { Input } from "../../components/Input"
 import { Modal } from "../../components/Modal"
 import { useNavigate } from "react-router-dom"
+import { useCookies } from "react-cookie"
 
 
 export const Login= () => {
@@ -18,6 +19,7 @@ export const Login= () => {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("Carregando ...")
+  const [cookies, setCookies, removeCookies] = useCookies(["key_user_token", "key_user_refresh_token"])
 
   const handleSubmit = async (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault()
@@ -27,6 +29,7 @@ export const Login= () => {
       username: username,
       password: password
     };
+
 
     try{
       await fetch(`${urlAPI}/auth/login`, {
@@ -42,7 +45,15 @@ export const Login= () => {
           if(resposta?.statusCode === 401){
             setMessage('Login Inválido!')
           } else {
-            localStorage.setItem("keyPermissionAnime", await resposta?.access_token)
+            // localStorage.setItem("keyPermissionAnime", await resposta?.access_token)
+            setCookies("key_user_token", await resposta?.access_token, {
+              path: "/",
+              maxAge: 300,
+            })
+            setCookies("key_user_refresh_token", await resposta?.refresh_token, {
+              path: "/",
+              maxAge: 300,
+            })
             setLoading(false)
             navigate('/animes')
           }

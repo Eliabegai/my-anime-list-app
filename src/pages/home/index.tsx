@@ -9,6 +9,7 @@ import { GetItensProps } from "../../types/listAnimesProps";
 import { FiltersAnimeList } from "../../components/Filters";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
+import { useCookies } from "react-cookie";
 
 export const Home = () => {
   const navigate = useNavigate()
@@ -27,6 +28,8 @@ export const Home = () => {
   const [ open, setOpen ] = useState(false);
   const handleOpen = () => setOpen(!open);
   const permissionToken = localStorage.getItem("keyPermissionAnime")
+  const [cookies, setCookies, removeCookies] = useCookies(["key_user_token", "key_user_refresh_token"])
+
 
   useEffect(() => {
     getData()
@@ -123,7 +126,7 @@ export const Home = () => {
     let newFilter = ''
     if(filter) newFilter = filter
 
-    if(permissionToken === null){
+    if(cookies.key_user_token === null){
       navigate("/login")
     }
 
@@ -133,7 +136,7 @@ export const Home = () => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${permissionToken}`
+          'Authorization': `Bearer ${cookies.key_user_token}`
         }
       }).then(response =>{
         return response.json();

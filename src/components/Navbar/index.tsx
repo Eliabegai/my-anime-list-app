@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode"
 import { Link, useSearchParams } from "react-router-dom"
 import ImageDragon from '../../img/dragon.png'
 import { Avatar } from "../Avatar"
+import { useCookies } from "react-cookie"
 
 type TokenProps = {
   payload: {
@@ -19,17 +20,20 @@ export const Navbar = () => {
 
   const [name, setName] = useState('')
   const permissionToken:string | null= localStorage.getItem("keyPermissionAnime")
+  const [cookies, setCookies, removeCookies] = useCookies(["key_user_token", "key_user_refresh_token"])
 
   useEffect(() => {
-    if(permissionToken !== null){
-      const decoded = jwtDecode<TokenProps>(permissionToken)
+    if(cookies.key_user_token){
+      const decoded = jwtDecode<TokenProps>(cookies?.key_user_token)
       setName(decoded?.payload.name)
-      console.log(decoded)
     }
   },[])
 
   function handleLogout() {
-    localStorage.clear()
+    // localStorage.clear()
+    setCookies("key_user_token", "")
+    setCookies("key_user_refresh_token", "")
+
   }
 
 
@@ -42,7 +46,7 @@ export const Navbar = () => {
         </Link>
 
         {
-          permissionToken &&
+          cookies.key_user_token &&
 
             <div className="flex flex-1 flex-row justify-center items-center">
                 <div className="mr-4">
@@ -100,7 +104,7 @@ export const Navbar = () => {
                 `}
                 >
                   {
-                    permissionToken === null ? "Login" : "Logout"
+                    cookies.key_user_token ? "Logout" : "Login"
                   }
                 </Link>
             </li>
