@@ -18,6 +18,7 @@ export type CardProps = {
   handleButtonChangeAdd?: () => void
   handleButtonChangeRemove?: () => void
   handleChangeChapter?: (value: string, id: string) => void
+  disabled?: boolean
 }
 
 export type Photo = {
