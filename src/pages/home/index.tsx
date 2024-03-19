@@ -344,6 +344,7 @@ export const Home = () => {
                 handleButtonChangeAdd={() => handleChangeChapter(i._id, 'add')}
                 handleButtonChangeRemove={() => handleChangeChapter(i._id, 'remove')}
                 handleChangeChapter={handleModifyChapter}
+                disabled={i.status === 'concluido'}
               />
             ))
           }
