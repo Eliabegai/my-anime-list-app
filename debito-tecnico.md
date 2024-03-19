@@ -26,3 +26,5 @@ Colocar aqui o que precisa ser revisado, melhorado ou criado para ter uma boa pe
     </div>
   ```
   
+salvar imagem em base64
+img.src
