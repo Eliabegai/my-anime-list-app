@@ -5,15 +5,17 @@ type ButtonProps = {
   typeButton?: string
   size?: 'small' | 'default' | 'large'
   className?: string
+  disabled?: boolean
 }
 
-export const Button = ({ onClick, children, typeButton, size, className }:ButtonProps) => {
+export const Button = ({ onClick, children, typeButton, size, className, disabled }:ButtonProps) => {
 
   return(
     <>
     {
       size === 'small' &&
-      <button 
+      <button
+        disabled={disabled}
         onClick={onClick}
         data-type={typeButton}
         data-size={size}
@@ -24,6 +26,10 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         data-[type=bold]:font-bold 
         hover:bg-green-700 
         active:bg-blue-700
+        disabled:border-gray-700
+        disabled:text-gray-300
+        disabled:hover:bg-transparent
+        disabled:pointer-events-none
         ${className}
         `}
       >
@@ -33,6 +39,7 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
     {
       size === 'default' &&
       <button 
+        disabled={disabled}
         onClick={onClick}
         data-type={typeButton}
         data-size={size}
@@ -43,6 +50,10 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         data-[type=bold]:font-bold 
         hover:bg-green-700 
         active:bg-blue-700
+        disabled:border-gray-700
+        disabled:text-gray-300
+        disabled:hover:bg-transparent
+        disabled:pointer-events-none
         ${className}
         `}
       >
@@ -52,6 +63,7 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
     {
       size === 'large' &&
       <button 
+        disabled={disabled}
         onClick={onClick}
         data-type={typeButton}
         data-size={size}
@@ -62,6 +74,10 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         data-[type=bold]:font-bold 
         hover:bg-green-700 
         active:bg-blue-700
+        disabled:border-gray-700
+        disabled:text-gray-300
+        disabled:hover:bg-transparent
+        disabled:pointer-events-none
         ${className}
         `}
       >
