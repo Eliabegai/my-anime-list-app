@@ -4,10 +4,11 @@ type ButtonProps = {
   typeButton?: string
   size?: 'small' | 'default' | 'large' | 'avatar'
   className?: string
+  disabled?: boolean
 }
 
-export const Button = ({ onClick, children, typeButton, size, className }:ButtonProps) => {
-
+export const Button = ({ onClick, children, typeButton, size, className, disabled }:ButtonProps) => {
+  
   return(
     <>
     {
@@ -16,6 +17,7 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         onClick={onClick}
         data-type={typeButton}
         data-size={size}
+        disabled={disabled}
         className={`
         flex items-center justify-center
         w-auto h-6 text-sm p-3 text-white 
@@ -23,6 +25,10 @@ export const Button = ({ onClick, children, typeButton, size, className }:Button
         data-[type=bold]:font-bold 
         hover:bg-green-700 
         active:bg-blue-700
+        disabled:border-gray-700
+        disabled:text-gray-300
+        disabled:hover:bg-transparent
+        disabled:pointer-events-none
         ${className}
         `}
       >

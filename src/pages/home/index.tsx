@@ -30,6 +30,18 @@ export const Home = () => {
   const permissionToken = localStorage.getItem("keyPermissionAnime")
   const [cookies, setCookies, removeCookies] = useCookies(["key_user_token", "key_user_refresh_token"])
 
+  // const array = Array.from({length: 10}, (_, i) => ({
+  //   _id: `US${i}`,
+  //   name: `User${i}`,
+  //   imageUrl: `https://picsum.photos/seed/${i}/200/200`,
+  //   scan: {
+  //     name: 'Ler manga',
+  //     url: 'https://lermanga.org/'
+  //   },
+  //   chapter: (i+1).toString(),
+  //   status: i % 2 === 0 ? 'lendo' : 'concluido',
+  //   type: 'Manga'
+  // }))
 
   useEffect(() => {
     getData()
@@ -213,6 +225,7 @@ export const Home = () => {
         });
     } catch {
       alert('Houve um erro, Desculpe!')
+      setLoading(false);
     }
   }
 
@@ -231,7 +244,6 @@ export const Home = () => {
 
     if(type === 'add') {
       newChapter = newChapter + 1
-
     } 
     if(type === 'remove') {
       newChapter = newChapter - 1
@@ -335,6 +347,26 @@ export const Home = () => {
               />
             ))
           }
+
+          {/* {
+            array &&
+            array?.map(i => (
+              <Card
+                key={i._id}
+                _id={i._id}
+                name={i.name}
+                chapter={i.chapter}
+                status={i.status}
+                image={i.imageUrl}
+                type={i.type}
+                newScans={i?.scan}
+                handleButtonChangeAdd={() => handleChangeChapter(i._id, 'add')}
+                handleButtonChangeRemove={() => handleChangeChapter(i._id, 'remove')}
+                handleChangeChapter={handleModifyChapter}
+                disabled={i.status === 'lendo'}
+              />
+            ))
+          } */}
 
         </div>
       </div>
